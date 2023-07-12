@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.dslist.GameMinDTO;
 import com.devsuperior.dslist.entities.Game;
 import com.devsuperior.dslist.services.GameService;
 
@@ -17,8 +18,9 @@ public class GameController {
 	private GameService gameService;
 	
 	@GetMapping
-	public List<Game> findAll(){
+	public List<GameMinDTO> findAll(){
 		List<Game> result = gameService.findAll();
-		return result;
+		List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList(); //converte os dados recebidos como tipo game para o tipo DTO
+		return dto; 
 	}
 }
